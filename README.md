@@ -156,17 +156,3 @@ parens, divide-by-zero, malformed input).
     └── expr_test.go
 ```
 
-## Notes on this iteration
-
-This version fixes three pre-existing build issues alongside the new features:
-
-1. **File casing.** `Main.GO` and `cmd/root.GO` were renamed to lowercase `.go`.
-   The Go toolchain only recognizes the lowercase extension, so the repo did not
-   build on Linux or macOS (it appeared to work on Windows only because NTFS is
-   case-insensitive).
-2. **Import path.** `main.go` now imports `"go-cl/cmd"` to match the module
-   name declared in `go.mod`. The previous `"GO-CL/cmd"` did not resolve.
-3. **Silent failures on bad input.** The old helpers printed an error and
-   returned an empty string, which the caller would then print as the "result."
-   Helpers now return `error` values and the CLI exits with a non-zero status
-   on any failure.
